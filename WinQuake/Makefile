@@ -13,6 +13,15 @@
 # untested (though likely to work).
 USE_SDL2=1
 
+# work-in-progress... Trying to remove the need for assembly in SW rendered quake. Oh boy.
+NO_X86_ASM=y
+
+ifdef NO_X86_ASM
+ASM_FLAG = -U__i386__
+else
+ASM_FLAG = 
+endif
+
 ifeq ($(USE_SDL2),1)
 SDL_CONFIG ?= sdl2-config
 else
@@ -69,15 +78,15 @@ TDFXGLLDFLAGS=-L$(TDFXGL_DIR)/release$(ARCH)$(GLIBC) -l3dfxgl -lglide2x -ldl
 GLLDFLAGS=-L/usr/X11/lib -L/usr/local/lib -lGL -lX11 -lXext -ldl /usr/lib/i386-linux-gnu/libXxf86dga.so.1.0.0 /usr/lib/i386-linux-gnu/libXxf86vm.so.1.0.0 -lm
 GLCFLAGS=-DGLQUAKE -I$(MESA_DIR)/include -I/usr/include/glide
 
-DO_CC=$(CC) $(CFLAGS) -o $@ -c $<
-DO_DEBUG_CC=$(CC) $(DEBUG_CFLAGS) -o $@ -c $<
-DO_GL_CC=$(CC) $(CFLAGS) $(GLCFLAGS) $(SDL_CFLAGS) -o $@ -c $<
-DO_GL_DEBUG_CC=$(CC) $(DEBUG_CFLAGS) $(GLCFLAGS) $(SDL_CFLAGS) -o $@ -c $<
-DO_X11_CC=$(CC) $(CFLAGS) $(XCFLAGS) $(SDL_CFLAGS) -o $@ -c $<
-DO_X11_DEBUG_CC=$(CC) $(DEBUG_CFLAGS) $(XCFLAGS) $(SDL_CFLAGS) -o $@ -c $<
-DO_O_CC=$(CC) -O $(CFLAGS) -o $@ -c $<
-DO_AS=$(CC) $(CFLAGS) -DELF -x assembler-with-cpp -o $@ -c $<
-DO_GL_AS=$(CC) $(CFLAGS) $(GLCFLAGS) -DELF -x assembler-with-cpp -o $@ -c $<
+DO_CC=$(CC) $(CFLAGS) $(ASM_FLAG) -o $@ -c $<
+DO_DEBUG_CC=$(CC) $(ASM_FLAG) $(DEBUG_CFLAGS) -o $@ -c $<
+DO_GL_CC=$(CC) $(CFLAGS) $(ASM_FLAG) $(GLCFLAGS) $(SDL_CFLAGS) -o $@ -c $<
+DO_GL_DEBUG_CC=$(CC) $(ASM_FLAG) $(DEBUG_CFLAGS) $(GLCFLAGS) $(SDL_CFLAGS) -o $@ -c $<
+DO_X11_CC=$(CC) $(CFLAGS) $(ASM_FLAG) $(XCFLAGS) $(SDL_CFLAGS) -o $@ -c $<
+DO_X11_DEBUG_CC=$(CC) $(ASM_FLAG) $(DEBUG_CFLAGS) $(XCFLAGS) $(SDL_CFLAGS) -o $@ -c $<
+DO_O_CC=$(CC) -O $(CFLAGS) $(ASM_FLAG) -o $@ -c $<
+DO_AS=$(CC) $(CFLAGS) $(ASM_FLAG) -DELF -x assembler-with-cpp -o $@ -c $<
+DO_GL_AS=$(CC) $(CFLAGS) $(ASM_FLAG) $(GLCFLAGS) -DELF -x assembler-with-cpp -o $@ -c $<
 
 #############################################################################
 # SETUP AND BUILD
@@ -154,7 +163,6 @@ X11_OBJS = \
 	$(BUILDDIR)/x11/net_vcr.o \
 	$(BUILDDIR)/x11/net_udp.o \
 	$(BUILDDIR)/x11/net_bsd.o \
-	$(BUILDDIR)/x11/nonintel.o \
 	$(BUILDDIR)/x11/pr_cmds.o \
 	$(BUILDDIR)/x11/pr_edict.o \
 	$(BUILDDIR)/x11/pr_exec.o \
@@ -187,8 +195,14 @@ X11_OBJS = \
 	$(BUILDDIR)/x11/vid_x.o \
 	$(BUILDDIR)/x11/snd_dma.o \
 	$(BUILDDIR)/x11/snd_mem.o \
-	$(BUILDDIR)/x11/snd_mix.o \
-	\
+	$(BUILDDIR)/x11/snd_mix.o
+
+
+ifdef NO_X86_ASM
+X11_OBJS := $(X11_OBJS) \
+	$(BUILDDIR)/x11/nonintel.o
+else
+X11_OBJS := $(X11_OBJS) \
 	$(BUILDDIR)/x11/d_draw.o \
 	$(BUILDDIR)/x11/d_draw16.o \
 	$(BUILDDIR)/x11/d_parta.o \
@@ -207,6 +221,7 @@ X11_OBJS = \
 	$(BUILDDIR)/x11/r_aclipa.o \
 	$(BUILDDIR)/x11/snd_mixa.o \
 	$(BUILDDIR)/x11/sys_dosa.o
+endif
 
 ifeq ($(USE_SDL2),1)
 # sdl sound
