@@ -19,7 +19,7 @@ else
 SDL_CONFIG ?= sdl-config
 endif
 SDL_CFLAGS := $(shell $(SDL_CONFIG) --cflags) -DUSE_SDL2
-SDL_LIBS   := $(shell $(SDL_CONFIG) --libs)
+SDL_LIBS   := $(shell $(SDL_CONFIG) --libs) -lXi  -lX11 -lXt -lXxf86vm -lXss -lXrandr -lXcursor -lwayland-client -lxkbcommon -lwayland-cursor -ldrm -lwayland-egl -lgbm -lXinerama -lpulse -lasound 
 
 BASEVERSION=1.09
 VERSION=$(BASEVERSION)$(GLIBC)
@@ -61,7 +61,7 @@ RELEASE_CFLAGS=$(BASE_CFLAGS) -g -mtune=native -O3 -march=native
 DEBUG_CFLAGS=$(BASE_CFLAGS) -g
 LDFLAGS=-lm -m32
 SVGALDFLAGS=-lvga
-XLDFLAGS=-L/usr/X11R6/lib -lX11 -lXext /usr/lib/i386-linux-gnu/libXxf86dga.so.1.0.0
+XLDFLAGS=-L/usr/X11R6/lib -L/usr/lib/i386-linux-gnu -lX11 -lXext /usr/lib/i386-linux-gnu/libXxf86dga.so.1.0.0
 XCFLAGS=-DX11
 
 MESAGLLDFLAGS=-L/usr/lib/X11 -L/usr/local/lib -L$(MESA_DIR)/lib -lMesaGL -lglide2x -lX11 -lXext -ldl
