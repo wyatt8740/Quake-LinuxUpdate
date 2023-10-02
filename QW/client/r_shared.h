@@ -33,6 +33,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	MAXHEIGHT	2048
 #define	MAXWIDTH	2560
 
+#define MAXDIMENSION ((MAXHEIGHT > MAXWIDTH) ? MAXHEIGHT : MAXWIDTH)
+
+#define SIN_BUFFER_SIZE (MAXDIMENSION+CYCLE)
+
 #define INFINITE_DISTANCE	0x10000		// distance that's always guaranteed to
 										//  be farther away than anything in
 										//  the scene
@@ -51,8 +55,8 @@ extern int		r_drawnpolycount;
 
 extern cvar_t	r_clearcolor;
 
-extern int	sintable[1280];
-extern int	intsintable[1280];
+extern int	sintable[SIN_BUFFER_SIZE];
+extern int	intsintable[SIN_BUFFER_SIZE];
 
 extern	vec3_t	vup, base_vup;
 extern	vec3_t	vpn, base_vpn;
