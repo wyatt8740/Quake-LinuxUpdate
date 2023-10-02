@@ -450,6 +450,9 @@ void	VID_Init (unsigned char *palette)
    XVisualInfo template;
    int num_visuals;
    int template_mask;
+
+   // Sound init is here in quakeworld. Not sure why. :p
+   S_Init();
    
    ignorenext=0;
    vid.width = 320;

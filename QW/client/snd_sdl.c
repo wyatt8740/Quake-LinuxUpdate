@@ -117,8 +117,9 @@ qboolean SNDDMA_Init (dma_t *dma)
 	}
     /* i think i'm just zeroing dma mem here */
 	memset ((void *) dma, 0, sizeof(dma_t));
-	/*shm = dma;*/
-    shm = &sn;
+    Con_Printf("TRYING TO INIT AUDIO\n");
+	shm = dma;
+    // shm = &sn;
 
 	/* Fill the audio DMA information block */
 	/* Since we passed NULL as the 'obtained' spec to SDL_OpenAudio(),
