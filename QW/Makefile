@@ -89,7 +89,7 @@ TARGETS=$(BUILDDIR)/qwsv
 else
 #TARGETS=$(BUILDDIR)/qwsv $(BUILDDIR)/qwcl $(BUILDDIR)/qwcl.x11 $(BUILDDIR)/glqwcl $(BUILDDIR)/glqwcl.glx
 # No OpenGL
-TARGETS=$(BUILDDIR)/qwcl.x11
+TARGETS=$(BUILDDIR)/qwsv $(BUILDDIR)/qwcl.x11
 #TARGETS=$(BUILDDIR)/qwsv $(BUILDDIR)/qwcl $(BUILDDIR)/qwcl.x11
 endif
 
