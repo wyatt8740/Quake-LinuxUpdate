@@ -82,7 +82,10 @@ make it differ from the original.
 	think this is merely due to some assembly used,
 	and some changes to update the assembly to the
 	x86_64 architecture could make this work in 64
-	bit OSes natively.
+	bit OSes natively. Also, there is a "pure C"
+    implementation of everything that needs assembly
+    on x86; I just need to remember how I used it.
+    I have it working on my Powerbook G4 (PowerPC).
 
 With that out of the way here is how to compile it:
 For the OpenGL GLX version (the high-quality version most sane people want),
