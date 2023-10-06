@@ -1,18 +1,53 @@
 A brief readme added by Wyatt Ward.
 
-Best viewed in a monospace font, like Courier, Courier New, or what I use
-for my terminal and nano, 9-point WenQuanYi Micro Hei Mono. I don't know
-why it's called that but the font looks really good.
-
 I added this readme and some updated Makefiles, as well as tweaking a few of
 Quake's source files, to make it work properly on a modern Linux system.
 I did _not_ change any parts of the game to make it look all pretty, or
 to bring new improvements in graphics to the game. I only changed what was
-_absolutely essential_ to run the game.
+_absolutely essential_ to run the game, plus some things that desperately
+needed to be changed to work *properly* on modern Linux/Unix systems.
+
+Specifically, I am most interested in preserving the software-rendered version
+of Quake, since no one seems to care about it and everyone uses the later
+OpenGL port.
+
+Perhaps on account of me not knowing almost any 3D graphics programming
+already, I am not too intimidated by the concept of working on software
+quake... OpenGL would probably be just as hard. And I prefer how software
+rendered quake looks.
+
+Some more recent noteworthy changes, features, and notes (as of 2023):
+
+In the `WinQuake` (original "NetQuake") directory:
+* Bumped maximum window resolution from 1280x1024 to 2560x2048 for software
+  rendered Quake. Patched some assembly routines related to it, too (for i386).
+* Added SDL audio backend (borrowed and adapted from Quakespasm). This allows
+  for playing music with a CD drive emulator and getting sound effects
+  simultaneously, without needing two sound cards (since OSS DMA doesn't play
+  nice with software mixing).
+* Some bad hacks in the makefile to make it link to everything it needs to.
+* XQuake and GLQuake both function; XQuake is more thoroughly tested.
+
+In the `QW` (QuakeWorld) directory (NEW!):
+* Added support for 24-bit RGB color in X11 software rendered quakeworld.
+  The sources in the `WinQuake` directory supported this already, but
+  QuakeWorld's did not. In many ways, QW seems to be based on an older
+  version of the code.
+* Bumped maximum window resolution from 1280x1024 to 2560x2048 for software
+  rendered quakeworld. Note that this was more difficult here than in
+  `WinQuake` due to more hardcoded values. Patched some related assembly
+  routines, too (for i386).
+* Added SDL audio backend (borrowed and adapted from Quakespasm). This allows
+  for playing music with a CD drive emulator and getting sound effects
+  simultaneously, without needing two sound cards (since OSS DMA doesn't play
+  nice with software mixing).
+* Fixed a crash related to going underwater on some larger screen resolutions.
+* Some bad hacks in the makefile to make it link to everything it needs to.
+* XQuakeWorld functions; I play with a friend online using it.
+* GLQuakeWorld is completely untested and likely needs work.
 
 The original, unmodified source can be found here:
 https://github.com/id-Software/Quake
-
 
 A good how-to for arguments and troubleshooting and such is here:
 http://www.linuxdoc.org/HOWTO/Quake-HOWTO-1.html
