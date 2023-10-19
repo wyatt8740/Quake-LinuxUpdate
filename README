@@ -45,6 +45,8 @@ In the `QW` (QuakeWorld) directory (NEW!):
 * Some bad hacks in the makefile to make it link to everything it needs to.
 * XQuakeWorld functions; I play with a friend online using it.
 * GLQuakeWorld is completely untested and likely needs work.
+* Extended maximum length of user info string, for partial compatibility with
+  some more "modern" (i.e., incompatible) quakeworld server variants.
 
 The original, unmodified source can be found here:
 https://github.com/id-Software/Quake
