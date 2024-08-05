@@ -29,7 +29,7 @@ typedef unsigned char 		byte;
 typedef enum {false, true}	qboolean;
 
 #define	MAX_INFO_STRING	392
-#define	MAX_SERVERINFO_STRING	512
+#define	MAX_SERVERINFO_STRING	1024
 #define	MAX_LOCALINFO_STRING	32768
 
 //============================================================================
